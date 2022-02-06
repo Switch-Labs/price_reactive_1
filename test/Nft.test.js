@@ -17,6 +17,7 @@ describe('NFT Unit Tests', async function () {
       let expectedURI = fs.readFileSync("./test/data/sword1.svg.txt", "utf8")
       let uri = await anNFT.tokenURI(0)
       console.log(expectedURI)
+      console.log("\n vs \n")
       console.log(uri)
       expect(uri == expectedURI).to.be.true
   })

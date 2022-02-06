@@ -23,19 +23,27 @@ module.exports = async ({
         aggregatorAddress = networkConfig[chainId]['ethUsdPriceFeed']
     }
 
+    // Deploy the external library to generate swords
+    // see https://github.com/wighawag/hardhat-deploy
+    const swordMakerLibrary = await deploy("SwordMaker", {
+        from: deployer
+    });
+    log(`Deployed SwordMaker library contract to ${swordMakerLibrary.address}`)
+
     const NFT = await deploy('Nft', {
         from: deployer,
         args: [aggregatorAddress],
-        log: true
+        log: true,
+        libraries: {SwordMaker: swordMakerLibrary.address}
     })
 
-    log(`Depolyed NFT contract to ${NFT.address}`)
+    log(`Deployed NFT contract to ${NFT.address}`)
     log(`Verify with:\n npx hardhat verify --network ${networkName} ${NFT.address}`)
 
     if (networkName == "localhost") {
         log("Let's create an NFT now!")
 
-        const MyNFTContract = await ethers.getContractFactory("Nft")
+        const MyNFTContract = await ethers.getContractFactory("Nft", {libraries: {SwordMaker: swordMakerLibrary.address}})          
         const accounts = await ethers.getSigners()
         const signer = accounts[0]
         const anNFT = new ethers.Contract(NFT.address, MyNFTContract.interface, signer) // Q: what does this do? new ethers.Contract(
