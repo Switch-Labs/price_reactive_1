@@ -32,5 +32,16 @@ module.exports = async ({
     log(`Depolyed NFT contract to ${NFT.address}`)
     log(`Verify with:\n npx hardhat verify --network ${networkName} ${NFT.address}`)
 
+    if (networkName == "localhost") {
+        log("Let's create an NFT now!")
+
+        const MyNFTContract = await ethers.getContractFactory("Nft")
+        const accounts = await ethers.getSigners()
+        const signer = accounts[0]
+        const anNFT = new ethers.Contract(NFT.address, MyNFTContract.interface, signer) // Q: what does this do? new ethers.Contract(
+
+        tx = await anNFT.create()
+        log(`You can view the tokenURI here ${await anNFT.tokenURI(0)}`)
+    }    
 
 }

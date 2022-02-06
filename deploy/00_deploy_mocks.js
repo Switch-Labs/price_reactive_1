@@ -21,10 +21,10 @@ module.exports = async ({
         })
         log("Mocks Deployed!")
         log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        log(`Depolyed NFT contract to ${Aggregator.address}`)
+        log(`Depolyed Pricefeed Mock contract to ${Aggregator.address}`)
         log("You are deploying to a local network, you'll need a local network running to interact")
         log("Please run `npx hardhat console` to interact with the deployed smart contracts!")
-        log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        log("////////////////////////////////////////////////////")
     }
 
 }
